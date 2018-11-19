@@ -3,7 +3,7 @@ package no.hvl.dat103;
 public class Process2 implements Runnable {
 	private ConcurrencyLibrary cl;
 
-	public Process2() { this.cl = new ConcurrencyLibrary(); }
+	public Process2(ConcurrencyLibrary cl) { this.cl = cl; }
 	@Override
 	public void run() {
 		while (true) {

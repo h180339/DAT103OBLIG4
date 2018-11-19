@@ -1,9 +1,9 @@
 package no.hvl.dat103;
 
 public class Process1 implements Runnable {
-	private ConcurrencyLibrary cl;
 
-	public Process1() { this.cl = new ConcurrencyLibrary(); }
+	ConcurrencyLibrary cl;
+	public Process1(ConcurrencyLibrary cl) { this.cl = cl; }
 
 	@Override
 	public void run() {

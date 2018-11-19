@@ -11,19 +11,19 @@ public class ConcurrencyLibrary {
 	// acquire 5 times before a process has to wait...
 	public Semaphore sem;
 	private List<Integer> list;
-	private Integer tall = new Integer(22);
+	//private Integer tall = new Integer(22);
 
 	public ConcurrencyLibrary() {
 		sem  = new Semaphore(1);
 		list = new ArrayList<>();
-		list.add(this.tall);
+		list.add(22);
 	}
 
 	public void criticalSection1() {
 		try {
 			sem.acquire();
-			System.out.println("Sett inn tall: " + this.tall);
-			list.add(tall);
+			System.out.println("Sett inn tall: " + 22);
+			list.add(22);
 			sem.release();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
