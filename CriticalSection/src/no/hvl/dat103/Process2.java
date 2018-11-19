@@ -8,7 +8,6 @@ public class Process2 implements Runnable {
 	public void run() {
 		while (true) {
 			cl.criticalSection2();
-			System.out.println("Hallo fra P2");
 			synchronized (this) {
 				try {
 					this.wait(900);

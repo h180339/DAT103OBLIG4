@@ -2,11 +2,11 @@ package no.hvl.dat103;
 
 public class Process1 implements Runnable {
 
-	private Shared shared;
+	private MySemaphore shared;
 	private final int i = 0;
 	private final int j = 1;
 
-	public Process1(Shared shared) { this.shared = shared; }
+	public Process1(MySemaphore shared) { this.shared = shared; }
 
 	@Override
 	public void run() {

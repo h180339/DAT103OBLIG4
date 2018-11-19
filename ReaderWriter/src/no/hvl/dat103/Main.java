@@ -8,7 +8,7 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		Shared shared = new Shared();
+		MySemaphore shared = new MySemaphore();
 
 		new Thread(new Process1(shared)).start();
 		new Thread(new Process2(shared)).start();

@@ -4,11 +4,11 @@ import static java.lang.Thread.sleep;
 
 public class Process2 implements Runnable {
 
-	private Shared shared;
+	private MySemaphore shared;
 	private final int i = 0;
 	private final int j = 1;
 
-	public Process2(Shared shared) { this.shared = shared; }
+	public Process2(MySemaphore shared) { this.shared = shared; }
 
 	@Override
 	public void run() {

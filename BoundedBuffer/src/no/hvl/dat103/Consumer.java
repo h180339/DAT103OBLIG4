@@ -1,47 +1,28 @@
 package no.hvl.dat103;
 
-/**
- * A consumer that consumes items and remove items from a shared buffer. The
- * item type is int.
- *
- * @author Atle Geitung
- * @version 15.05.2018 C++ version
- * @version 30.08.2018 Java version
- */
+
 public class Consumer extends Thread {
 
+    private MyGlobalVariables mgv;
     private Buffer buffer;
 
-    /**
-     * Constructs a new consumer.
-     *
-     * @param buffer The shared buffer
-     */
-    public Consumer(Buffer buffer) {
+    public Consumer(Buffer buffer, MyGlobalVariables mgv) {
+        this.mgv = mgv;
         this.buffer = buffer;
     }
 
-    /**
-     * Runs the consumer
-     * Removes items when available in the buffer and prints them
-     */
     @Override
     public void run() {
-        while (true) {
-            while (buffer.in == buffer.out) {
-                //do nothing
-            }
-            synchronized (this) {
-                Integer item = buffer.buffer[buffer.out];
-                buffer.out = (buffer.out + 1) % buffer.BUFFERSIZE;
-                System.out.println("Consumed: " + item);
-            }
-            try {
-                sleep(50);
-            } catch (InterruptedException e) {
-                // ignore
-            }
-        }
+        do {
+            buffer.vent(StringConstants.FULL, mgv);
+            buffer.vent(StringConstants.MUTEX, mgv);
+            Integer tall = buffer.removeFromList();
+            System.out.println("Consumer: " + tall);
+            buffer.signal(StringConstants.MUTEX, mgv);
+            buffer.signal(StringConstants.EMPTY, mgv);
+
+
+        } while(true);
     }
 
 }

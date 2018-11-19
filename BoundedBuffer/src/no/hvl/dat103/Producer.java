@@ -12,39 +12,25 @@ import java.util.Random;
  */
 public class Producer extends Thread {
 
-    private Buffer buffer;
     Random rand = new Random();
+    private MyGlobalVariables mgv;
+    private Buffer buffer;
 
-    /**
-     * Constructs a new producer.
-     *
-     * @param buffer The shared buffer
-     */
-    public Producer(Buffer buffer) {
+    public Producer(Buffer buffer, MyGlobalVariables mgv) {
+        this.mgv = mgv;
         this.buffer = buffer;
     }
 
-    /**
-     * Runs the producer
-     * Adds items to the buffer when it has space and prints them
-     */
+
     @Override
     public void run() {
-        while (true) {
-            while(((buffer.in + 1) % buffer.BUFFERSIZE) == buffer.out) {
-                //do nothing
-            }
-            synchronized (this) {
-                Integer item = rand.nextInt(100);
-                buffer.buffer[buffer.in] = item;
-                buffer.in = (buffer.in + 1) % buffer.BUFFERSIZE;
-                System.out.println("Produced: " + item);
-            }
-            try {
-                sleep(1);
-            } catch (InterruptedException e) {
-                // ignore
-            }
-        }
+        do {
+            Integer item = rand.nextInt(100);
+            buffer.vent(StringConstants.EMPTY, mgv);
+            buffer.vent(StringConstants.MUTEX, mgv);
+            buffer.addToList(item);
+            buffer.signal(StringConstants.MUTEX, mgv);
+            buffer.signal(StringConstants.FULL, mgv);
+        }while (true);
     }
 }

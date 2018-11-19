@@ -1,30 +1,41 @@
 package no.hvl.dat103;
 
-import java.util.LinkedList;
-import java.util.concurrent.Semaphore;
 
-import static java.lang.Thread.sleep;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * A shared buffer for consumers and producers. The item type is int. The buffer
- * is implemented by using a double ended queue.
- * @author Atle Geitung
- * @version 30.08.2018 Java version
- */
 public class Buffer {
 
-    public final static int BUFFERSIZE = 10;
+    private List<Integer> list;
 
-    public Integer[] buffer;
-    public int in;
-    public int out;
-
-    /**
-     * Makes a buffer
-     */
     public Buffer() {
-        buffer = new Integer[BUFFERSIZE];
-        in = 0;
-        out = 0;
+        list = new ArrayList<>();
+    }
+
+    public void vent(String variable, MyGlobalVariables mgv) {
+        while (mgv.getVariable(variable) <= 0) {
+        }
+        mgv.decrement(variable);
+    }
+    public void signal(String variable, MyGlobalVariables mgv) {
+        mgv.increment(variable);
+    }
+
+    public void addToList(int x) {
+        Integer tall = new Integer(x);
+        list.add(tall);
+        System.out.println("add " + tall + " to list");
+    }
+
+    public Integer removeFromList() {
+        if(!list.isEmpty()) {
+            Integer tall = list.remove(0);
+            System.out.println("remove " + tall + " from list");
+            return tall;
+        }else {
+            System.out.println("list empty, return -1");
+            return -1;
+        }
+
     }
 }
