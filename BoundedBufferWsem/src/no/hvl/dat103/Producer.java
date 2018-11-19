@@ -15,11 +15,6 @@ public class Producer extends Thread {
     private Buffer buffer;
     Random rand = new Random();
 
-    /**
-     * Constructs a new producer.
-     *
-     * @param buffer The shared buffer
-     */
     public Producer(Buffer buffer) {
         this.buffer = buffer;
     }
