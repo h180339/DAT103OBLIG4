@@ -4,24 +4,26 @@ import static java.lang.Thread.sleep;
 
 public class Writer implements Runnable {
 
-	private MyGlobalVariables mgv;
-	private MySemaphore mySemaphore;
+
+	private MySemaphore wrt;
+	private Buffer buffer;
 
 
-	public Writer(MySemaphore mySemaphore, MyGlobalVariables mgv) {
-		this.mySemaphore = mySemaphore;
-		this.mgv = mgv;
+	public Writer(MySemaphore wrt, Buffer buffer) {
+		this.wrt = wrt;
+		this.buffer = buffer;
 	}
 
 	@Override
 	public void run() {
 		do {
-			mySemaphore.vent(StringConstants.WRT, mgv);
+			wrt.vent();
 			System.out.println("writing");
 			try {sleep(1000);}catch (InterruptedException e) {e.printStackTrace();}
-			mySemaphore.skriv("boom");
-			mySemaphore.signal(StringConstants.WRT, mgv);
+			buffer.skriv("boom");
+			wrt.signal();
 			System.out.println("sluttet å skrive");
+			try {sleep(100);}catch (InterruptedException e) {e.printStackTrace();}
 		} while (true);
 	}
 	

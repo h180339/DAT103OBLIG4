@@ -7,14 +7,12 @@ package no.hvl.dat103;
 public class Main {
 
 	public static void main(String[] args) {
-		int readCount = 0;
-		int mutex = 1;
-		int wrt = 1;
-		MyGlobalVariables myGlobalVariables = new MyGlobalVariables(readCount, mutex, wrt);
+		MySemaphore mutex = new MySemaphore(1);
+		MySemaphore wrt = new MySemaphore(1);
+		Buffer buffer = new Buffer();
 
-		MySemaphore mySem = new MySemaphore();
-		new Thread(new Writer(mySem, myGlobalVariables)).start();
-		new Thread(new Reader(mySem, myGlobalVariables)).start();
+		new Thread(new Writer(wrt, buffer)).start();
+		new Thread(new Reader(mutex, wrt, buffer)).start();
 	}
 	
 }

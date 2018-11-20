@@ -1,32 +1,39 @@
 package no.hvl.dat103;
 
+import static java.lang.Thread.sleep;
+
 public class Reader implements Runnable {
 
-	private MyGlobalVariables mgv;
-	private MySemaphore mySemaphore;
 
-	public Reader( MySemaphore mySemaphore, MyGlobalVariables mgv) {
-		this.mgv = mgv;
-		this.mySemaphore = mySemaphore;
+	private MySemaphore mutex, wrt;
+	private Buffer buffer;
+
+	public Reader(MySemaphore mutex, MySemaphore wrt, Buffer buffer) {
+		this.mutex = mutex;
+		this.wrt = wrt;
+		this.buffer = buffer;
+
 	}
 
 	@Override
 	public void run() {
 		do {
-			mySemaphore.vent(StringConstants.MUTEX, mgv);
-			mgv.increment(StringConstants.READCOUNT);
-			if(mgv.getVariable(StringConstants.READCOUNT) == 1) {
-				System.out.println("loop");
-				mySemaphore.vent(StringConstants.WRT, mgv);
+			mutex.vent();
+			buffer.setReadCount(buffer.getReadCount() + 1);
+			if(buffer.getReadCount() == 1) {
+				wrt.vent();
 			}
-			mySemaphore.signal(StringConstants.MUTEX, mgv);
-			System.out.println("leser: " + mySemaphore.les());
-			mySemaphore.vent(StringConstants.MUTEX, mgv);
-			mgv.decrement(StringConstants.READCOUNT);
-			if(mgv.getVariable(StringConstants.READCOUNT) == 0) {
-				mySemaphore.signal(StringConstants.WRT, mgv);
+			mutex.signal();
+			System.out.println("LESER: " + buffer.les());
+			mutex.vent();
+			buffer.setReadCount(buffer.getReadCount() - 1);
+			if(buffer.getReadCount() == 0) {
+				wrt.signal();
 			}
-			mySemaphore.signal(StringConstants.MUTEX, mgv);
+			mutex.signal();
+			try {sleep(100);}catch (InterruptedException e) {e.printStackTrace();}
+
+
 		} while (true);
 	}
 

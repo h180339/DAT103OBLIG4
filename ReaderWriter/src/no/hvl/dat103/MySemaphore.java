@@ -1,53 +1,31 @@
 package no.hvl.dat103;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
+import static java.lang.Thread.sleep;
 
 public class MySemaphore {
 
-	Random rand = new Random();
-	private List<String> list;
+	private int tall;
 
-	public MySemaphore() {
-		list = new ArrayList<>();
+	public MySemaphore(int tall) {
+		this.tall = tall;
 	}
-	public void vent(String variable, MyGlobalVariables mgv) {
-		while (mgv.getVariable(variable) <= 0) {
+
+	public void vent() {
+		while (this.tall <= 0) {
+			//do nothing
+			try {
+				sleep(50);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
-		mgv.decrement(variable);
+		this.tall--;
+	}
+	public void signal() {
+		this.tall++;
 	}
 
-	public void signal(String variable, MyGlobalVariables mgv) {
-		mgv.increment(variable);
+	public int getTall() {
+		return this.tall;
 	}
-
-	public void skriv(String input) {
-		list.add(input);
-	}
-
-	public String les() {
-		//Integer tall = rand.nextInt(list.size() - 1);
-		//return list.get(tall);
-		return list.get(0);
-	}
-	/*
-	public void addToList(int x) {
-		Integer tall = new Integer(x);
-		list.add(tall);
-		System.out.println("add " + tall + " to list");
-	}
-
-	public Integer removeFromList() {
-		if(!list.isEmpty()) {
-			Integer tall = list.remove(0);
-			System.out.println("remove " + tall + " from list");
-			return tall;
-		}else {
-			System.out.println("list empty, return -1");
-			return -1;
-		}
-	}
-	*/
 }
