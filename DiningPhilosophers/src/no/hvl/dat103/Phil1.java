@@ -3,24 +3,27 @@ package no.hvl.dat103;
 
 public class Phil1 extends Thread {
 
-    private MyGlobalVariables mgv;
-    private Buffer buffer;
+    private MySemaphore[] chopsticks;
+    private int i;
 
-    public Phil1(Buffer buffer, MyGlobalVariables mgv) {
-        this.mgv = mgv;
-        this.buffer = buffer;
+    public Phil1(MySemaphore[] chopsticks, int i) {
+        this.chopsticks = chopsticks;
+        this.i = i;
     }
 
     @Override
     public void run() {
         do {
-            buffer.vent(StringConstants.FULL, mgv);
-            buffer.vent(StringConstants.MUTEX, mgv);
-            Integer tall = buffer.removeFromList();
-            System.out.println("Phil1: " + tall);
-            buffer.signal(StringConstants.MUTEX, mgv);
-            buffer.signal(StringConstants.EMPTY, mgv);
-
+            chopsticks[i].vent();
+            chopsticks[(i + 1) % 5].vent();
+            System.out.println("philo" + i + " START EATING");
+            try {sleep(1000);}catch (InterruptedException e) {e.printStackTrace();}
+            System.out.println("philo" + i + " STOP EATING");
+            chopsticks[i].signal();
+            chopsticks[(i + 1) % 5].signal();
+            System.out.println("philo" + i + " START THINKING");
+            try {sleep(1000);}catch (InterruptedException e) {e.printStackTrace();}
+            System.out.println("philo" + i + " STOP THINKING");
 
         } while(true);
     }
