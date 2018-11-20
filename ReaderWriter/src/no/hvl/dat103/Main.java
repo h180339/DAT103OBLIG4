@@ -12,7 +12,8 @@ public class Main {
 		Buffer buffer = new Buffer();
 
 		new Thread(new Writer(wrt, buffer)).start();
-		new Thread(new Reader(mutex, wrt, buffer)).start();
+		new Thread(new Reader(mutex, wrt, buffer, 1)).start();
+		new Thread(new Reader(mutex, wrt, buffer, 2)).start();
 	}
 	
 }

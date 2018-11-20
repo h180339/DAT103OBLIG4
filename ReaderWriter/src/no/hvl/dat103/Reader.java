@@ -7,11 +7,13 @@ public class Reader implements Runnable {
 
 	private MySemaphore mutex, wrt;
 	private Buffer buffer;
+	private int idTall;
 
-	public Reader(MySemaphore mutex, MySemaphore wrt, Buffer buffer) {
+	public Reader(MySemaphore mutex, MySemaphore wrt, Buffer buffer, int idTall) {
 		this.mutex = mutex;
 		this.wrt = wrt;
 		this.buffer = buffer;
+		this.idTall = idTall;
 
 	}
 
@@ -24,7 +26,7 @@ public class Reader implements Runnable {
 				wrt.vent();
 			}
 			mutex.signal();
-			System.out.println("LESER: " + buffer.les());
+			System.out.println("READER" + idTall + " LESER: " + buffer.les());
 			mutex.vent();
 			buffer.setReadCount(buffer.getReadCount() - 1);
 			if(buffer.getReadCount() == 0) {

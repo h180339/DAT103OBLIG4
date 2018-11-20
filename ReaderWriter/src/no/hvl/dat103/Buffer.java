@@ -3,11 +3,15 @@ package no.hvl.dat103;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Buffer {
 
     private List<String> list;
     private int readCount;
+    private Random rand = new Random();
+
+
     public Buffer() {
         readCount = 0;
         list = new ArrayList<>();
@@ -39,6 +43,7 @@ public class Buffer {
     }
 
     public String les() {
-        return list.get(0);
+        int randomTall = rand.nextInt(list.size());
+        return list.get(randomTall);
     }
 }
