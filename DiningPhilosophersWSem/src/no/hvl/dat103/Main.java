@@ -3,7 +3,7 @@ package no.hvl.dat103;
 class Main {
 
     public static void main(String[] args) {
-        Philosopher philosophers[] = new Philosopher[5];
+        Philosopher [] philosophers= new Philosopher[5];
         Fork forks[] = new Fork[5];
 
         for (int i = 0; i < philosophers.length; i++) {

@@ -15,20 +15,20 @@ class Philosopher extends Thread {
     public void run() {
         while (true) {
             leftFork.grab();
-            System.out.println("Philosopher #" + number + " grabs left fork.");
+            System.out.println("Philosopher #" + (number + 1) + " grabs left fork.");
             rightFork.grab();
-            System.out.println("Philosopher #" + number + " grabs right fork.");
+            System.out.println("Philosopher #" + (number + 1) + " grabs right fork.");
             eat();
             leftFork.release();
-            System.out.println("Philosopher #" + number + " releases left fork.");
+            System.out.println("Philosopher #" + (number + 1) + " releases left fork.");
             rightFork.release();
-            System.out.println("Philosopher #" + number + " releases right fork.");
+            System.out.println("Philosopher #" + (number + 1) + " releases right fork.");
         }
     }
 
     void eat() {
         try {
-            System.out.println("Philosopher #" + number + " eating");
+            System.out.println("Philosopher #" + (number + 1) + " eating");
             Thread.sleep(1000);
         } catch (Exception e) {
             e.printStackTrace(System.out);
