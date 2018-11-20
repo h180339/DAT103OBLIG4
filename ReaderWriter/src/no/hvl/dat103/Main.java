@@ -1,9 +1,6 @@
 package no.hvl.dat103;
 
-/**
- * Main class to demonstrate how to run multiple Threads. 
- *
- */
+
 public class Main {
 
 	public static void main(String[] args) {

@@ -1,20 +1,19 @@
 package no.hvl.dat103;
 
+
 import java.util.concurrent.Semaphore;
 
-/**
- * Main class to demonstrate how to run multiple Threads. 
- *
- */
 public class Main {
 
 	public static void main(String[] args) {
 
-		//Shared shared = new Shared();
-		Semaphore shared = new Semaphore(1);
+		Semaphore mutex = new Semaphore(1);
+		Semaphore wrt = new Semaphore(1);
+		Buffer buffer = new Buffer();
 
-		new Thread(new Process1(shared)).start();
-		new Thread(new Process2(shared)).start();
+		new Thread(new Writer(wrt, buffer)).start();
+		new Thread(new Reader(mutex, wrt, buffer, 1)).start();
+		new Thread(new Reader(mutex, wrt, buffer, 2)).start();
 	}
 	
 }
