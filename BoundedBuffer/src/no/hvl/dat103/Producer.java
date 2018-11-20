@@ -2,23 +2,22 @@ package no.hvl.dat103;
 
 import java.util.Random;
 
-/**
- * A producer that produces items and add items to a shared buffer. The item
- * type is int.
- *
- * @author Atle Geitung
- * @version 15.05.2018 C++ version
- * @version 30.08.2018 Java version
- */
 public class Producer extends Thread {
 
-    Random rand = new Random();
-    private MyGlobalVariables mgv;
+    private Random rand = new Random();
+    private MySemaphore full;
+    private MySemaphore mutex;
+    private MySemaphore empty;
     private Buffer buffer;
+    int bufferSize;
 
-    public Producer(Buffer buffer, MyGlobalVariables mgv) {
-        this.mgv = mgv;
+    public Producer(MySemaphore full, MySemaphore mutex, MySemaphore empty, Buffer buffer) {
+        this.full = full;
+        this.mutex = mutex;
+        this.empty = empty;
         this.buffer = buffer;
+        bufferSize = empty.getTall() -1;
+
     }
 
 
@@ -26,11 +25,28 @@ public class Producer extends Thread {
     public void run() {
         do {
             Integer item = rand.nextInt(100);
+            if(buffer.getList().size() < bufferSize) {
+                empty.vent();
+                mutex.vent();
+                buffer.addToList(item);
+                mutex.signal();
+                full.signal();
+            }
+
+
+            try {
+                sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            /*
             buffer.vent(StringConstants.EMPTY, mgv);
             buffer.vent(StringConstants.MUTEX, mgv);
             buffer.addToList(item);
             buffer.signal(StringConstants.MUTEX, mgv);
             buffer.signal(StringConstants.FULL, mgv);
+            */
         }while (true);
     }
 }

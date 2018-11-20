@@ -1,26 +1,28 @@
 package no.hvl.dat103;
 
 public class MyGlobalVariables {
-    private int full;
-    private int mutex;
-    private int empty;
+    private int[] semaphores;
 
-    public MyGlobalVariables(int full, int mutex, int empty) {
-        this.full = full;
-        this.mutex = mutex;
-        this.empty = empty;
+    public MyGlobalVariables(int [] semaphores) {
+        this.semaphores = semaphores;
     }
 
     public void increment(String variable) {
         switch (variable) {
-            case "full" :
-                this.full++;
+            case "0" :
+                this.semaphores[0]++;
                 break;
-            case "mutex":
-                this.mutex++;
+            case "1":
+                this.semaphores[1]++;
                 break;
-            case "empty":
-                this.empty++;
+            case "2":
+                this.semaphores[2]++;
+                break;
+            case "3":
+                this.semaphores[3]++;
+                break;
+            case "4":
+                this.semaphores[4]++;
                 break;
         }
     }

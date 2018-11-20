@@ -4,7 +4,11 @@ package no.hvl.dat103;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Buffer {
+public class Buffer
+Consumer
+        Main
+        MySemaphore
+        ProducerBuffer {
 
     private List<Integer> list;
 
@@ -12,6 +16,14 @@ public class Buffer {
         list = new ArrayList<>();
     }
 
+    public void vent(String variable, MyGlobalVariables mgv) {
+        while (mgv.getVariable(variable) <= 0) {
+        }
+        mgv.decrement(variable);
+    }
+    public void signal(String variable, MyGlobalVariables mgv) {
+        mgv.increment(variable);
+    }
 
     public void addToList(int x) {
         Integer tall = new Integer(x);
@@ -28,13 +40,6 @@ public class Buffer {
             System.out.println("list empty, return -1");
             return -1;
         }
-    }
 
-    public boolean listIsEmpty() {
-        return list.isEmpty();
-    }
-
-    public List<Integer> getList() {
-        return list;
     }
 }
