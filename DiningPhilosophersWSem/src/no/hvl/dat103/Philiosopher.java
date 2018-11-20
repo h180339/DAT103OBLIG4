@@ -29,7 +29,7 @@ class Philosopher extends Thread {
     void eat() {
         try {
             System.out.println("Philosopher #" + (number + 1) + " eating");
-            Thread.sleep(1000);
+            sleep(1000);
         } catch (Exception e) {
             e.printStackTrace(System.out);
         }

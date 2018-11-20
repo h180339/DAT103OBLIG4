@@ -9,8 +9,7 @@ public class Fork {
     void grab() {
         try {
             mutex.acquire();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace(System.out);
         }
     }
@@ -18,4 +17,5 @@ public class Fork {
     void release() {
         mutex.release();
     }
+
 }
