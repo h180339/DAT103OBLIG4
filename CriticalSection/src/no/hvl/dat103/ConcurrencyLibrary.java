@@ -6,12 +6,8 @@ import java.util.concurrent.Semaphore;
 
 public class ConcurrencyLibrary {
 
-	// Java has synchronization primitives in its standard library, ready to use
-	// The following creates a semaphore of initial size 5, which means that we can call
-	// acquire 5 times before a process has to wait...
 	public Semaphore sem;
 	private List<Integer> list;
-	//private Integer tall = new Integer(22);
 
 	public ConcurrencyLibrary() {
 		sem  = new Semaphore(1);

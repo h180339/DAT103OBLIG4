@@ -19,5 +19,4 @@ public class Process1 implements Runnable {
 
 		}
 	}
-	
 }
